@@ -8,7 +8,7 @@ Comming soon...
 ## Instalation
 
 ```bash
-npm install --save @candioto/nestjs-hubspot
+npm install --save @candioto/nestjs-hubspot @hubspot/api-client
 ```
 
 ## Getting Started
