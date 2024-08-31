@@ -1,8 +1,9 @@
-import { DynamicModule, Module, Provider, Type } from "@nestjs/common";
+import { DynamicModule, Global, Module, Provider, Type } from "@nestjs/common";
 import { Client } from "@hubspot/api-client";
 import { HubspotApiKey, HubspotClientToken, HubspotModuleOptions } from "./constants";
 import { HubspotOptions, HubspotOptionsFactory, HubspotOptionsAsync } from "./interfaces";
 
+@Global()
 @Module({})
 export class HubspotModule {
 
@@ -59,18 +60,18 @@ export class HubspotModule {
   private static createAsyncOptionsProvider(
       options: HubspotOptionsAsync,
   ): Provider {
-      if (options.useFactory) {
-          return {
-              inject: options.inject || [],
-              provide: HubspotModuleOptions,
-              useFactory: options.useFactory,
-          };
-      }
-
+    if (options.useFactory) {
       return {
-          inject: [options.useExisting || options.useClass],
-          provide: HubspotModuleOptions,
-          useFactory: (optionsFactory: HubspotOptionsFactory) => optionsFactory.createHubspotOptions(),
+        inject: options.inject || [],
+        provide: HubspotModuleOptions,
+        useFactory: options.useFactory,
       };
+    }
+
+    return {
+      inject: [options.useExisting || options.useClass],
+      provide: HubspotModuleOptions,
+      useFactory: (optionsFactory: HubspotOptionsFactory) => optionsFactory.createHubspotOptions(),
+    };
   }
 }

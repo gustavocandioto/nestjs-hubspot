@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for lib/hubspot.module.ts</title>
+    <title>Code coverage report for dist/hubspot.module.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">lib</a> hubspot.module.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">dist</a> hubspot.module.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -139,7 +139,9 @@
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -215,83 +217,87 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { DynamicModule, Global, Module, Provider, Type } from "@nestjs/common";
-import { Client } from "@hubspot/api-client";
-import { HubspotApiKey, HubspotClientToken, Hubspot<span class="branch-1 cbranch-no" title="branch not covered" >ModuleOptions } from "./constants";</span>
-import { HubspotOptions, HubspotOptionsFactory, HubspotOptionsAsync } from "./interfaces";
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span></span></span></span></span>
-@Global()<span class="branch-2 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" ></span></span>
-@Module({})
-export class HubspotModule {
-&nbsp;
-  static forRoot(options: HubspotOptions): DynamicModule {
-    const hubspotProvider: Provider = {
-      provide: HubspotClientToken,
-      useValue: new Client(options)
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+var __decorate = (this &amp;&amp; this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c &lt; 3 ? target : <span class="branch-1 cbranch-no" title="branch not covered" >desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,</span> d;
+    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>for (var i = <span class="cstat-no" title="statement not covered" >decorators.length - 1;</span> i &gt;= 0; i--) <span class="cstat-no" title="statement not covered" >if (d = decorators[i]) <span class="cstat-no" title="statement not covered" >r = (c &lt; 3 ? d(r) : c &gt; 3 ? d(target, key, r) : d(target, key)) || r;</span></span></span>
+    return c &gt; 3 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >r </span>&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >Object.defineProperty(target, key, r),</span> r;
+};
+var HubspotModule_1;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.HubspotModule = void 0;
+const common_1 = require("@nestjs/common");
+const api_client_1 = require("@hubspot/api-client");
+const constants_1 = require("./constants");
+let HubspotModule = HubspotModule_1 = class HubspotModule {
+    static forRoot(options) {
+        const hubspotProvider = {
+            provide: constants_1.HubspotClientToken,
+            useValue: new api_client_1.Client(options)
+        };
+        return {
+            module: HubspotModule_1,
+            providers: [
+                {
+                    provide: constants_1.HubspotApiKey,
+                    useValue: options.apiKey
+                },
+                hubspotProvider
+            ],
+            exports: [hubspotProvider]
+        };
     }
-    return {
-      module: HubspotModule,
-      providers: [
-        {
-          provide: HubspotApiKey,
-          useValue: options.apiKey
-        },
-        hubspotProvider
-      ],
-      exports: [hubspotProvider]
+    static forRootAsync(hubspotOptions) {
+        const hubspotProvider = {
+            inject: [constants_1.HubspotModuleOptions],
+            provide: constants_1.HubspotClientToken,
+            useFactory: (options) =&gt; {
+                return new api_client_1.Client(options);
+            },
+        };
+        return {
+            exports: [hubspotProvider],
+            imports: hubspotOptions.imports,
+            module: HubspotModule_1,
+            providers: [...this.createAsyncProviders(hubspotOptions), hubspotProvider],
+        };
     }
-  }
-&nbsp;
-  static forRootAsync(hubspotOptions: HubspotOptionsAsync): DynamicModule {
-    const hubspotProvider: Provider = {
-      inject: [HubspotModuleOptions],
-      provide: HubspotClientToken,
-      useFactory: (options: HubspotOptions) =&gt; {
-          return new Client(options);
-      },
-    };
-&nbsp;
-    return {
-      exports: [hubspotProvider],
-      imports: hubspotOptions.imports,
-      module: HubspotModule,
-      providers: [...this.createAsyncProviders(hubspotOptions), hubspotProvider],
-    };
-  }
-&nbsp;
-  private static createAsyncProviders(options: HubspotOptionsAsync): Provider[] {
-    if (options.useExisting || options.useFactory) {
-      return [this.createAsyncOptionsProvider(options)];
+    static createAsyncProviders(options) {
+        if (options.useExisting || options.useFactory) {
+            return [this.createAsyncOptionsProvider(options)];
+        }
+        const useClass = options.useClass;
+        return [
+            this.createAsyncOptionsProvider(options),
+            {
+                provide: useClass,
+                useClass,
+            },
+        ];
     }
-&nbsp;
-    const useClass = options.useClass as Type&lt;HubspotOptionsFactory&gt;;
-    return [
-      this.createAsyncOptionsProvider(options),
-      {
-        provide: useClass,
-        useClass,
-      },
-    ];
-  }
-&nbsp;
-  private static createAsyncOptionsProvider(
-      options: HubspotOptionsAsync,
-  ): Provider {
-    if (options.useFactory) {
-      return {
-        inject: options.inject || [],
-        provide: HubspotModuleOptions,
-        useFactory: options.useFactory,
-      };
+    static createAsyncOptionsProvider(options) {
+        if (options.useFactory) {
+            return {
+                inject: options.inject || [],
+                provide: constants_1.HubspotModuleOptions,
+                useFactory: options.useFactory,
+            };
+        }
+        return {
+            inject: [options.useExisting || options.useClass],
+            provide: constants_1.HubspotModuleOptions,
+            useFactory: (optionsFactory) =&gt; optionsFactory.createHubspotOptions(),
+        };
     }
-&nbsp;
-    return {
-      inject: [options.useExisting || options.useClass],
-      provide: HubspotModuleOptions,
-      useFactory: (optionsFactory: HubspotOptionsFactory) =&gt; optionsFactory.createHubspotOptions(),
-    };
-  }
-}</pre></td></tr></table></pre>
+};
+exports.HubspotModule = HubspotModule;
+exports.HubspotModule = HubspotModule = HubspotModule_1 = __decorate([
+    (0, common_1.Module)({})
+], HubspotModule);
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
