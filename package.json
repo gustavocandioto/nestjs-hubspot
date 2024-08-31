@@ -1,6 +1,6 @@
 {
   "name": "@candioto/nestjs-hubspot",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Unofficial Hubspot NestJS module that provides Hubspot official client to NestJS applications",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
