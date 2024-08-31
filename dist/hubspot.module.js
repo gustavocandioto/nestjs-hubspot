@@ -74,5 +74,6 @@ let HubspotModule = HubspotModule_1 = class HubspotModule {
 };
 exports.HubspotModule = HubspotModule;
 exports.HubspotModule = HubspotModule = HubspotModule_1 = __decorate([
+    (0, common_1.Global)(),
     (0, common_1.Module)({})
 ], HubspotModule);
